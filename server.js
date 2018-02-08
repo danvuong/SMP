@@ -9,6 +9,12 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 
+/*
+app.use(session());
+app.use(body());
+app.use(express.static('public'));
+*/
+
 
 var clients = new Array();
 
@@ -26,9 +32,8 @@ io.on('connection', function(socket){
 	socket.on('login_required', function(data){
 		pseudo = data;
 		console.log('logged : ' + pseudo);
+		socket.emit('logged');
 	});
-
-
 
 	socket.on('disconnect', function(){
 		console.log('client : ' + pseudo + ' disconnected');
@@ -40,7 +45,6 @@ io.on('connection', function(socket){
 	});
 
 });
-
 
 
 

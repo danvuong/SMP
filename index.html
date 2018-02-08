@@ -27,9 +27,9 @@
 
 
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="js/classes/map.js"></script>
+
   </head>
-
-
   <body>
 
   
@@ -54,7 +54,6 @@
   $('#loginform').submit(function(event){
     event.preventDefault();
     if ($('#pseudo').val() != ""){
-        joueur.pseudo = $('#pseudo').val();
         socket.emit('login_required', $('#pseudo').val());
     }
     else{
@@ -62,15 +61,15 @@
     };
   });
 
+  socket.on('logged', function(){
+  	    $("#login").fadeOut();
+  	    //lancer le jeu
+  })
+
   socket.on('mauvaisnombatard', function(){
     window.alert('peudo deja pris deso pas deso');
   })
 
-  socket.on('logged', function(){
-    $("#login").fadeOut();
-  });
-
-  
 </script>
   </body>
 </html>
