@@ -9,8 +9,8 @@ route.get('/', function(req, res){
 })
 
 
-route.get('/js/classes/Tileset.js', function(req, res){
-	res.sendFile(path.resolve('./js/classes/Tileset.js'));
+route.get('/js/classes/tileset.js', function(req, res){
+	res.sendFile(path.resolve('./js/classes/tileset.js'));
 })
 
 route.get('/js/classes/map.js', function(req, res){
@@ -21,8 +21,8 @@ route.get('/js/classes/personnage.js', function(req, res){
 	res.sendFile(path.resolve('./js/classes/personnage.js'));
 })
 
-route.get('/js/rpg.js', function(req, res){
-	res.sendFile(path.resolve('./js/rpg.js'));
+route.get('/js/SMP.js', function(req, res){
+	res.sendFile(path.resolve('./js/SMP.js'));
 })
 
 route.get('/css/style.css', function(req, res){
@@ -30,17 +30,27 @@ route.get('/css/style.css', function(req, res){
 })
 
 //images :
-route.get('/js/endive.png', function(req, res){
-	res.sendFile(path.resolve('./js/endive.png'));
+route.get('/js/sprites/endive.png', function(req, res){
+	res.sendFile(path.resolve('./js/sprites/endive.png'));
 })
 
-route.get('/js/patate.png', function(req, res){
-	res.sendFile(path.resolve('./js/patate.png'));
+route.get('/js/sprites/menu.png', function(req, res){
+	res.sendFile(path.resolve('./js/sprites/menu.png'));
 })
 
-route.get('/tilesets/basique.png', function(req, res){
-	res.sendFile(path.resolve('./tilesets/basique.png'));
+route.get('/sprites/menu.png', function(req, res){
+	res.sendFile(path.resolve('./js/sprites/menu.png'));
 })
+
+route.get('/js/sprites/patate.png', function(req, res){
+	res.sendFile(path.resolve('./js/sprites/patate.png'));
+})
+
+route.get('/js/sprites/tilesets/basique.png', function(req, res){
+	res.sendFile(path.resolve('./js/sprites/tilesets/basique.png'));
+})
+
+
 
 
 module.exports = route;
