@@ -40,7 +40,7 @@ io.on('connection', function(socket){
 	socket.on('login_required', function(data){
 		pseudo = data;
 		socket.emit('logged');
-		clients.push(new carac_personnage(id, pseudo, 0, 0));
+		clients.push(new carac_personnage(id, pseudo, 1, 1));
 		console.log('logged : ' + pseudo + ' id : ' + id);
 		id++;
 	});
