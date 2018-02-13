@@ -51,20 +51,28 @@
 <canvas id="canvas" width="480" height="480">Votre navigateur ne supporte pas HTML5, veuillez le mettre à jour pour jouer.</canvas>
 
 
-    
+
 
 <script>
-
+  var tab_personnages = new Array();
 
   $('#loginform').submit(function(event){
     event.preventDefault();
     if ($('#pseudo').val() != ""){
+        pseudo = $('#pseudo').val();
         socket.emit('login_required', $('#pseudo').val());
     }
     else{
         window.alert('rentrer un pseudo !');
     };
   });
+
+  socket.on('logged', function(){
+    socket.emit('init_required');
+  })
+
+  socket.on('new_personnage', function(data){
+  })
 
 
 

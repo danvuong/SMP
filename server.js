@@ -18,6 +18,14 @@ app.use(express.static('public'));
 
 var clients = new Array();
 
+var carac_personnage = function(id, pseudo, x, y){
+	this.id = id;
+	this.pseudo = pseudo;
+	this.x = x;
+	this.y = y;
+}
+
+var id = 0;
 
 var route = require('./ressources/routes');
 
@@ -31,11 +39,31 @@ io.on('connection', function(socket){
 
 	socket.on('login_required', function(data){
 		pseudo = data;
-		console.log('logged : ' + pseudo);
 		socket.emit('logged');
+		clients.push(new carac_personnage(id, pseudo, 0, 0));
+		console.log('logged : ' + pseudo + ' id : ' + id);
+		id++;
 	});
 
+	socket.on('init_required', function(){
+		for (var i = 0;i<clients.length;i++){
+			if(clients[i].pseudo != pseudo){
+				socket.emit('new_personnage',{id : clients[i].id, pseudo: clients[i].pseudo, x: clients[i].x, y: clients[i].y});
+				console.log('client send : ' + clients[i].pseudo);
+			}else{
+				socket.broadcast.emit('new_personnage',{id : clients[i].id, pseudo: clients[i].pseudo, x: clients[i].x, y: clients[i].y});
+				console.log('client send to older: ' + clients[i].pseudo);
+			}
+		};
+	})
+
 	socket.on('disconnect', function(){
+		var bye;
+		for (var i = 0;i<clients.length;i++){
+			if (clients[i].pseudo == pseudo){
+				clients.splice(i,1);
+			};
+		};
 		console.log('client : ' + pseudo + ' disconnected');
 	});
 
