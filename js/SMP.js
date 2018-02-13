@@ -3,14 +3,19 @@ var mp = new map(tab_map);
 var aff_menu = new map(map_menu);
 var image_menu = new Image();
 image_menu.src = "sprites/menu.png";
-var joueur = new personnage("endive.png",1,1,DIRECTION.DROITE)
+//var joueur = new personnage("endive.png",1,1,DIRECTION.DROITE,pseudo)
+var joueur = new personnage("endive.png",1,1,DIRECTION.DROITE,pseudo);
 mp.personnages.push(joueur)
 
 
+socket.on('logged', function(pseudo){
+	joueur.pseudo = pseudo;
+	mp.personnages[0].pseudo = pseudo;
+})
+
 
 socket.on('new_personnage', function(data){
-	var joueur = new personnage("patate.png",data.x,data.y,0);
-	joueur.pseudo = data.pseudo;
+	var joueur = new personnage("patate.png",data.x,data.y,0,data.pseudo);
 	mp.personnages.push(joueur);
 });
 
@@ -21,6 +26,28 @@ socket.on('delete_joueur', function(data){
 		};
 	};
 });
+
+socket.on('deplacement', function(data){
+		for(var i=0;i<mp.personnages.length;i++){
+			if (mp.personnages[i].pseudo == data.pseudo){
+				switch(data.direction){
+					case DIRECTION.BAS :
+						mp.personnages[i].deplacer(DIRECTION.BAS, mp);
+						break;
+					case DIRECTION.HAUT :
+						mp.personnages[i].deplacer(DIRECTION.HAUT, mp);
+						break;
+					case DIRECTION.DROITE :
+						mp.personnages[i].deplacer(DIRECTION.DROITE, mp);
+						break;
+					case DIRECTION.GAUCHE :
+						mp.personnages[i].deplacer(DIRECTION.GAUCHE, mp);
+						break;
+				};	
+			};
+		};
+});
+
 
 window.onload = function() {
 	var canvas = document.getElementById('canvas');
@@ -35,6 +62,8 @@ var jeu = function(){
 
 	var keymap = new Array();
 	var interval = null;
+	
+
 	onkeydown = function(e)
 	{
     	e = e || event; // to deal with IE
@@ -46,21 +75,25 @@ var jeu = function(){
 	    		if(keymap[122] || keymap[90] || keymap[87])		
 		{
 			joueur.deplacer(DIRECTION.HAUT,mp);
+			//socket.emit('deplacement',{x: joueur.x, y: joueur.y, pseudo: joueur.pseudo, direction: 'haut'});
 			// return true;
 		}
 		if(keymap[115] || keymap[83] )
 		{
 			joueur.deplacer(DIRECTION.BAS,mp);
+			//socket.emit('deplacement',{x: joueur.x, y: joueur.y, pseudo: joueur.pseudo, direction: 'bas'});
 			// return true;
 		}	
 		if(keymap[113]||keymap[97]||keymap[81]||keymap[65])
 		{
 			joueur.deplacer(DIRECTION.GAUCHE,mp);
+			//socket.emit('deplacement',{x: joueur.x, y: joueur.y, pseudo: joueur.pseudo, direction: 'gauche'});
 			// return true;
 		}
 		if(keymap[100]||keymap[68])
 		{
 			joueur.deplacer(DIRECTION.DROITE,mp);
+			//socket.emit('deplacement',{x: joueur.x, y: joueur.y, pseudo: joueur.pseudo, direction: 'droite'});
 			// return true;
 		}
 		

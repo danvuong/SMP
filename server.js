@@ -46,7 +46,7 @@ io.on('connection', function(socket){
 			};
 		};
 		if(pseudo != ''){
-			socket.emit('logged');
+			socket.emit('logged', pseudo);
 			clients.push(new carac_personnage(id, pseudo, 1, 1));
 			console.log('logged : ' + pseudo + ' id : ' + id);
 			id++;
@@ -64,6 +64,21 @@ io.on('connection', function(socket){
 			}
 		};
 	})
+
+
+	socket.on('deplacement', function(data){
+		console.log(pseudo + ' deplacement');
+		for(var i=0;i<clients.length;i++){
+			if(clients[i].pseudo == data.pseudo){
+				clients[i].x = data.x;
+				clients[i].y = data.y;
+			};
+		};
+		socket.broadcast.emit('deplacement', data);
+	})
+
+
+
 
 	socket.on('disconnect', function(){
 		var bye;

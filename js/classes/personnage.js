@@ -8,11 +8,11 @@ var DIRECTION = {
 var DUREE_ANIMATION = 4;
 var DUREE_DEPLACEMENT = 10;
 
-var personnage = function(url,x,y,direction)
+var personnage = function(url,x,y,direction, pseudo)
 {
 	this.x = x;
 	this.y = y;
-	this.pseudo;
+	this.pseudo = pseudo;
 	this.etat_animation = -1;
 	this.sprite = new Image();
 	this.sprite.src = "js/sprites/" + url;
@@ -53,7 +53,7 @@ personnage.prototype.deplacer = function(direction,map)
 	this.etat_animation = 1;
 	this.x = prochaine_case.x;
 	this.y = prochaine_case.y;
-
+	socket.emit('deplacement',{x: this.x, y: this.y, pseudo: this.pseudo, direction: direction});
 }
 
 personnage.prototype.dessinerpersonnage = function(contexte)

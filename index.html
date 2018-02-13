@@ -67,7 +67,7 @@
     };
   });
 
-  socket.on('logged', function(){
+  socket.on('logged', function(pseudo){
     socket.emit('init_required');
   })
 
