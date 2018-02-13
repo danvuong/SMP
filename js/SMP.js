@@ -3,6 +3,8 @@ var mp = new map(tab_map);
 var aff_menu = new map(map_menu);
 var image_menu = new Image();
 image_menu.src = "sprites/menu.png";
+var joueur = new personnage("endive.png",1,1,0)
+mp.personnages.push(joueur)
 
 
 window.onload = function() {

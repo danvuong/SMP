@@ -41,4 +41,9 @@ function map(choix){
       }
     }
 
+    for(var i = 0;i<this.personnages.length;i++)
+    {
+      this.personnages[i].dessinerpersonnage(contexte);
+    }
+
   }
