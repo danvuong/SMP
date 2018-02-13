@@ -39,10 +39,18 @@ io.on('connection', function(socket){
 
 	socket.on('login_required', function(data){
 		pseudo = data;
-		socket.emit('logged');
-		clients.push(new carac_personnage(id, pseudo, 1, 1));
-		console.log('logged : ' + pseudo + ' id : ' + id);
-		id++;
+		for (var i=0;i<clients.length;i++){
+			if(clients[i].pseudo == pseudo || pseudo == ''){
+				socket.emit('mauvaisnombatard');
+				pseudo = '';
+			};
+		};
+		if(pseudo != ''){
+			socket.emit('logged');
+			clients.push(new carac_personnage(id, pseudo, 1, 1));
+			console.log('logged : ' + pseudo + ' id : ' + id);
+			id++;
+		};
 	});
 
 	socket.on('init_required', function(){
