@@ -61,6 +61,7 @@ io.on('connection', function(socket){
 		var bye;
 		for (var i = 0;i<clients.length;i++){
 			if (clients[i].pseudo == pseudo){
+				socket.broadcast.emit('delete_joueur',{id : clients[i].id, pseudo: clients[i].pseudo, x: clients[i].x, y: clients[i].y});
 				clients.splice(i,1);
 			};
 		};
